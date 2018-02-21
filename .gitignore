@@ -1,0 +1,9 @@
+
+# dependencies
+/node_modules
+
+# IDEs
+.ide
+
+# files
+stations.json
