@@ -4,13 +4,6 @@
 
 # IDEs
 /.idea
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/serverCookies.iml
-.idea/vcs.xml
-
 
 # files
 stations.json
