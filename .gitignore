@@ -3,7 +3,7 @@
 /node_modules
 
 # IDEs
-.ide
+.idea
 
 # files
 stations.json
