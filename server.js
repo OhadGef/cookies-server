@@ -3,6 +3,8 @@ const app = express();
 
 const bodyParser = require('body-parser');
 const Station = require('./schemas/stations').Station;
+const Log = require('./schemas/logs').Log;
+
 const PORT = 3000;
 
 app.use(bodyParser.json());
@@ -10,18 +12,31 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.set("Content-Type", "application/x-www-form-urlencoded");
+    res.set("Content-Type", "application/json");
     next();
 });
 
 app.get('/', (req, res) => {
-    Station.find({}, (err, station) => {
+    Station.find({},{'_id': 0}, (err, station) => {
         console.log('Get all stations');
         res.json(station);
     })
 });
 
+app.get('/sum', (req,res) =>{
+    Log.aggregate(
+        [
+            { "$group":
+                    { "_id": "$message",
+                        count:{$sum: 1}}}
+        ],  function(err, results) {
+            res.send(JSON.stringify(results));
+        })
+
+})
+
 app.post('/new', (req,res) => {
+    console.log('**************');
     let newStation = new Station(req.body);
     newStation.save( (err, st)=> {
         console.log(`There is a new station named: ${st.name}`)

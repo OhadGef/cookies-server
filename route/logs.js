@@ -12,25 +12,25 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req,res) =>{
-   Log.find({}, (err, log) => {
+   Log.find({},{'_id': 0}, (err, logs) => {
        if(err){
            console.error(err)
        }else {
-           console.log('Get all stations');
-           res.json(log);
+           console.log('Get all logs');
+           console.log( typeof logs);
+           res.send(JSON.stringify(logs));
        }
    })
 });
 
 router.post('/',(req,res) => {
-    console.log('Log Message');
     let newLog = new Log(req.body);
     newLog.save( (err, msg)=> {
         if(err){
             console.error(err)
         } else {
             console.log(`LOG: ${msg.message}`)
-            res.end();
+            res.send({'ms':'Create success'});
         }
     })
 });
@@ -40,7 +40,7 @@ router.delete('/', (req,res) => {
         if(err){
             console.error(err)
         } else {
-            res.end("success");
+            res.end("Delete success");
         }
     })
 })

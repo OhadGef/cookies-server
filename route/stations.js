@@ -34,6 +34,7 @@ router.get('/', (req, res) => {
 
 router.put('/', (req, res) => {
     const stationName = req.params.stations;
+    console.log(stationName)
     Station.findOneAndUpdate({name: stationName}, {
         id: req.body.id,
         name: req.body.name,
